@@ -1,5 +1,6 @@
 package com.example.ticket.controller;
 
+import com.example.ticket.mapper.PriceMapper;
 import com.example.ticket.service.IStaionService;
 import com.example.ticket.util.ResponseResult;
 import jakarta.annotation.Resource;
@@ -22,6 +23,7 @@ public class StationController {
 
     @GetMapping("selectAll")
     public ResponseResult selectAll() {
+
         return staionService.selectAll();
     }
 }

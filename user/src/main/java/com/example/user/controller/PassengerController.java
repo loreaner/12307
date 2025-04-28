@@ -21,6 +21,7 @@ public class PassengerController {
     public ResponseResult updatePassenger(@RequestBody Passenger passenger) {
         log.info("更新乘客信息: {}", passenger);
         boolean success = passengerService.updatePassenger(passenger);
+        log.info(String.valueOf(success));
         if (success) {
             return ResponseResult.success("更新成功");
         } else {
