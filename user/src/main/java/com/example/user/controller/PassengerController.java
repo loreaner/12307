@@ -9,6 +9,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
+
+import static com.example.user.util.ResponseResult.success;
+
 @CrossOrigin(origins = "http://localhost:5173")
 @RequestMapping("/passenger")
 @RestController
@@ -23,7 +26,7 @@ public class PassengerController {
         boolean success = passengerService.updatePassenger(passenger);
         log.info(String.valueOf(success));
         if (success) {
-            return ResponseResult.success("更新成功");
+            return success("更新成功");
         } else {
             return ResponseResult.error("更新失败");
         }
@@ -32,18 +35,23 @@ public class PassengerController {
     @GetMapping("/search")
     public ResponseResult<List<Passenger>> searchPassengers(@RequestParam String name) {
         log.info(name+"6666");
-        return ResponseResult.success(passengerService.searchPassengersByName(name));
+        return success(passengerService.searchPassengersByName(name));
     }
 
     @PostMapping("/add")
-    public boolean addPassenger(@RequestBody Passenger passenger) {
+    public ResponseResult<List<Passenger>> addPassenger(@RequestBody Passenger passenger) {
         log.info(String.valueOf(passenger));
-        return  passengerService.addPassenger(passenger);
+        if(passengerService.addPassenger(passenger)==false){
+            return ResponseResult.error("该乘客已存在");
+        }
+        return  success(passengerService.searchPassengersByName(passenger.getUserName()));
 
     }
 
     @PostMapping("/delete")
-    public int batchDeletePassengers(@RequestBody List<Long> ids) {
-        return passengerService.batchDeletePassengers(ids);
+    public ResponseResult batchDeletePassengers(@RequestBody List<Long> ids) {
+        if(passengerService.batchDeletePassengers(ids)>0)
+            return ResponseResult.success("删除成功");
+        return ResponseResult.error("删除失败");
     }
 }

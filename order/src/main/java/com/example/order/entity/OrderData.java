@@ -1,6 +1,8 @@
 package com.example.order.entity;
 
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.mysql.cj.result.Field;
 import lombok.Data;
 
 @Data

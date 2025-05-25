@@ -12,3 +12,16 @@ mybatis:
   configuration:
     log-impl: org.apache.ibatis.logging.slf4j.Slf4jImpl
 
+rocketmq:
+  name-server: 192.168.176.131:9876  # 替换为你的NameServer地址
+  producer:
+    access-channel: LOCAL
+    # application.yml 增加以下配置
+    create-topic-key: test-topic  # 自动创建Topic
+    group: my-producer-group
+    send-message-timeout: 3000    # 发送超时时间从默认3秒改为5秒
+    retry-times-when-send-failed: 2  # 失败重试次数# 生产者组名
+  consumer:
+    group: my-consumer-group         # 消费者组名
+    # application.yml 增加连接优化配
+    pull-interval: 1000           # 拉取消息间隔

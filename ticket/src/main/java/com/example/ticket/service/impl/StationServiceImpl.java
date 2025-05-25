@@ -12,10 +12,14 @@ import com.example.ticket.util.ResponseResult;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
 @Service
 public class StationServiceImpl extends ServiceImpl<StationMapper, TrainInfo> implements IStaionService {
+    @Autowired
+    RedisTemplate redisTemplate;
     private static final Logger log = LoggerFactory.getLogger(StationServiceImpl.class);
     @Override
     public ResponseResult selectById(Integer id) {
@@ -27,7 +31,5 @@ public class StationServiceImpl extends ServiceImpl<StationMapper, TrainInfo> im
     @Override
     public ResponseResult selectAll() {
         log.info("niubi");
-        return ResponseResult.success(list());
-
-
+        return ResponseResult.success(redisTemplate.opsForValue().get("AllTrains"));
 }}

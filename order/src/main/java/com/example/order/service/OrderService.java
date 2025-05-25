@@ -10,5 +10,7 @@ public interface OrderService {
 
     List<OrderData> listAll();
 
-    Boolean deleteByIdNumber(String idNumber);
+    public boolean deleteOrderByIdNumber(String idNumber);
+
+
 }

@@ -1,7 +1,9 @@
 package com.example.order.controller;
 
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.example.order.entity.OrderData;
+import com.example.order.mapper.OrderMapper;
 import com.example.order.service.OrderService;
 import com.example.order.util.ResponseResult;
 import org.slf4j.Logger;
@@ -13,19 +15,23 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
-@RequestMapping("/order")
 @CrossOrigin(origins = "http://localhost:5173")
+@RequestMapping("/order")
 @RestController
 public class OrderController {
     private static final Logger log = LoggerFactory.getLogger(OrderController.class);
     @Autowired
     private OrderService orderService;
+    @Autowired
+    OrderMapper orderMapper;
 
     @PostMapping("/save")
     public ResponseResult submitOrder(@RequestBody List<OrderData> orderData) {
+
         log.info("Received order data: {}", orderData);
 
         try {
@@ -38,8 +44,18 @@ public class OrderController {
     }
     @GetMapping("/list")
     public ResponseResult<List<OrderData>> getAllOrders() {
+
         List<OrderData> orders = orderService.listAll();
         return ResponseResult.success(orders);
+    }
+    @PostMapping("/delete")
+    public ResponseResult deleteOrderById(@RequestParam String idNumber) {
+        QueryWrapper<OrderData> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("id_number", idNumber.toString());
+        System.out.println(idNumber);
+        if(orderMapper.delete(queryWrapper)>0)
+        return ResponseResult.success("成功");
+        return ResponseResult.error("失败");
     }
 
 }

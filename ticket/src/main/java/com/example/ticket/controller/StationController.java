@@ -1,9 +1,7 @@
 package com.example.ticket.controller;
 
-import com.example.ticket.mapper.PriceMapper;
 import com.example.ticket.service.IStaionService;
 import com.example.ticket.util.ResponseResult;
-import jakarta.annotation.Resource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;

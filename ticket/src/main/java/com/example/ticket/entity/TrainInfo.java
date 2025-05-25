@@ -2,7 +2,7 @@ package com.example.ticket.entity;
 
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
-@TableName("train")
+@TableName("trainss")
 @Data
 public class TrainInfo {
     private Long id; // 主键ID
